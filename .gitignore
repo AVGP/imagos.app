@@ -1,0 +1,10 @@
+# Compiled binary
+/imagos
+
+# Local SQLite database and WAL files
+*.db
+*.db-shm
+*.db-wal
+
+# ACME certificate cache
+/.autocert/

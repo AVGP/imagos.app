@@ -1,0 +1,79 @@
+{
+  "lexicon": 1,
+  "id": "app.imagos.photo",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "An individual uploaded photo that can be referenced in albums and posts.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["title", "image", "alt", "createdAt"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "Title of the photo."
+          },
+          "image": {
+            "type": "blob",
+            "accept": ["image/jpeg", "image/png", "image/webp", "image/gif"],
+            "maxSize": 10000000,
+            "description": "The image blob stored on the user's PDS."
+          },
+          "alt": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000,
+            "description": "Accessible alt text describing the image."
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 2000,
+            "description": "Extended description or story behind the photo."
+          },
+          "aspectRatio": {
+            "type": "ref",
+            "ref": "#aspectRatio"
+          },
+          "tagRefs": {
+            "type": "array",
+            "items": {
+              "type": "ref",
+              "ref": "com.atproto.repo.strongRef"
+            },
+            "maxLength": 32,
+            "description": "Strong references to app.imagos.tag records."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 64
+            },
+            "maxLength": 32,
+            "description": "Inline tag names for convenience."
+          },
+          "bskyPostRef": {
+            "type": "ref",
+            "ref": "com.atproto.repo.strongRef",
+            "description": "Optional strongRef to cross-posted app.bsky.feed.post."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime"
+          }
+        }
+      }
+    },
+    "aspectRatio": {
+      "type": "object",
+      "required": ["width", "height"],
+      "properties": {
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 }
+      }
+    }
+  }
+}

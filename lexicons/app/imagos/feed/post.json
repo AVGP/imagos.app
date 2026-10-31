@@ -1,0 +1,57 @@
+{
+  "lexicon": 1,
+  "id": "app.imagos.feed.post",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A post containing text and referencing one or more app.imagos.photo records.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["text", "photos", "createdAt"],
+        "properties": {
+          "text": {
+            "type": "string",
+            "maxLength": 3000,
+            "description": "Post caption or story text."
+          },
+          "photos": {
+            "type": "array",
+            "minLength": 1,
+            "maxLength": 20,
+            "items": {
+              "type": "ref",
+              "ref": "com.atproto.repo.strongRef"
+            },
+            "description": "Strong references to one or more app.imagos.photo records."
+          },
+          "tagRefs": {
+            "type": "array",
+            "items": {
+              "type": "ref",
+              "ref": "com.atproto.repo.strongRef"
+            },
+            "maxLength": 32
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 64
+            },
+            "maxLength": 32
+          },
+          "bskyPostRef": {
+            "type": "ref",
+            "ref": "com.atproto.repo.strongRef",
+            "description": "Optional strongRef to cross-posted app.bsky.feed.post."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime"
+          }
+        }
+      }
+    }
+  }
+}

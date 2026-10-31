@@ -1,0 +1,26 @@
+{
+  "lexicon": 1,
+  "id": "app.imagos.graph.follow",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A social follow relationship between two Atmosphere accounts, using the same subject DID model as app.bsky.graph.follow.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["subject", "createdAt"],
+        "properties": {
+          "subject": {
+            "type": "string",
+            "format": "did",
+            "description": "DID of the account being followed."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime"
+          }
+        }
+      }
+    }
+  }
+}

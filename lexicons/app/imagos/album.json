@@ -1,0 +1,64 @@
+{
+  "lexicon": 1,
+  "id": "app.imagos.album",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A curated photo album containing strong references to app.imagos.photo records.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["name", "photos", "createdAt"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "Album name."
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 2000,
+            "description": "Optional album description."
+          },
+          "photos": {
+            "type": "array",
+            "items": {
+              "type": "ref",
+              "ref": "com.atproto.repo.strongRef"
+            },
+            "maxLength": 200,
+            "description": "Ordered list of strong references to app.imagos.photo records."
+          },
+          "tagRefs": {
+            "type": "array",
+            "items": {
+              "type": "ref",
+              "ref": "com.atproto.repo.strongRef"
+            },
+            "maxLength": 32,
+            "description": "Strong references to app.imagos.tag records."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 64
+            },
+            "maxLength": 32,
+            "description": "Inline tag names for convenience."
+          },
+          "bskyPostRef": {
+            "type": "ref",
+            "ref": "com.atproto.repo.strongRef",
+            "description": "Optional strongRef to cross-posted app.bsky.feed.post."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime"
+          }
+        }
+      }
+    }
+  }
+}
