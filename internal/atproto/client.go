@@ -59,7 +59,7 @@ func BuildLoopbackClientID(redirectURI string) string {
 	v := url.Values{}
 	v.Set("redirect_uri", redirectURI)
 	v.Set("scope", DefaultScope)
-	return "http://localhost?" + v.Encode()
+	return "http://127.0.0.1?" + v.Encode()
 }
 
 // Identity holds resolved ATProto actor information.
@@ -71,19 +71,19 @@ type Identity struct {
 
 // OAuthPendingRequest holds state for an in-flight OAuth authorization request.
 type OAuthPendingRequest struct {
-	State          string `json:"state"`
-	DID            string `json:"did"`
-	Handle         string `json:"handle"`
-	PDSURL         string `json:"pdsUrl"`
-	AuthServerURL  string `json:"authServerUrl"`
-	TokenEndpoint  string `json:"tokenEndpoint"`
-	ClientID       string `json:"clientId,omitempty"`
-	RedirectURI    string `json:"redirectUri,omitempty"`
-	CodeVerifier   string `json:"codeVerifier"`
-	DPoPKeyPEM     string `json:"dpopKeyPem"`
-	DPoPNonce      string `json:"dpopNonce"`
-	RedirectURL    string `json:"redirectUrl"`
-	CreatedAt      int64  `json:"createdAt"`
+	State         string `json:"state"`
+	DID           string `json:"did"`
+	Handle        string `json:"handle"`
+	PDSURL        string `json:"pdsUrl"`
+	AuthServerURL string `json:"authServerUrl"`
+	TokenEndpoint string `json:"tokenEndpoint"`
+	ClientID      string `json:"clientId,omitempty"`
+	RedirectURI   string `json:"redirectUri,omitempty"`
+	CodeVerifier  string `json:"codeVerifier"`
+	DPoPKeyPEM    string `json:"dpopKeyPem"`
+	DPoPNonce     string `json:"dpopNonce"`
+	RedirectURL   string `json:"redirectUrl"`
+	CreatedAt     int64  `json:"createdAt"`
 }
 
 // OAuthSession holds an authenticated user's DPoP-bound ATProto OAuth session.
@@ -107,12 +107,12 @@ type RecordItem struct {
 }
 
 type ClientConfig struct {
-	ClientID          string
-	RedirectURI       string
-	PLCURL            string
-	DefaultHandleURL  string
-	DemoPDSURL        string
-	HTTPClient        *http.Client
+	ClientID         string
+	RedirectURI      string
+	PLCURL           string
+	DefaultHandleURL string
+	DemoPDSURL       string
+	HTTPClient       *http.Client
 }
 
 // Client handles ATProto Identity resolution, OAuth 2.0 DPoP flows, and XRPC calls to PDS instances.
@@ -184,7 +184,7 @@ type didDoc struct {
 
 // ResolveIdentity resolves a handle or DID to its canonical DID, handle, and PDS endpoint URL.
 func (c *Client) ResolveIdentity(ctx context.Context, identifier string) (*Identity, error) {
-	identifier = strings.TrimSpace( strings.TrimPrefix(strings.TrimSpace(identifier), "@") )
+	identifier = strings.TrimSpace(strings.TrimPrefix(strings.TrimSpace(identifier), "@"))
 	if identifier == "" {
 		return nil, errors.New("identifier (handle or DID) is required")
 	}
@@ -400,7 +400,7 @@ func (c *Client) ResolveOAuthEndpointsForBaseURL(publicBaseURL string) (clientID
 	u, err := url.Parse(publicBaseURL)
 	if err == nil {
 		host := u.Hostname()
-		if (host == "127.0.0.1" || host == "localhost") && strings.HasPrefix(c.cfg.ClientID, "http://localhost?") {
+		if (host == "127.0.0.1" || host == "localhost") && strings.HasPrefix(c.cfg.ClientID, "http://127.0.0.1?") {
 			return BuildLoopbackClientID(redirectURI), redirectURI
 		}
 	}
